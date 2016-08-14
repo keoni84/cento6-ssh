@@ -49,9 +49,9 @@ RUN rpm --rebuilddb \
 # We require supervisor-stdout to allow output of services started by 
 # supervisord to be easily inspected with "docker logs".
 # -----------------------------------------------------------------------------
-RUN easy_install 'supervisor == 3.2.3' 'supervisor-stdout == 0.1.1' \
-	&& mkdir -p /var/log/supervisor/
-
+#RUN easy_install 'supervisor == 3.2.3' 'supervisor-stdout == 0.1.1' \
+#	&& mkdir -p /var/log/supervisor/
+#
 # -----------------------------------------------------------------------------
 # UTC Timezone & Networking
 # -----------------------------------------------------------------------------
@@ -76,26 +76,26 @@ RUN sed -i 's~^# %wheel\tALL=(ALL)\tALL~%wheel\tALL=(ALL) ALL~g' /etc/sudoers
 # -----------------------------------------------------------------------------
 # Copy files into place
 # -----------------------------------------------------------------------------
-ADD usr/sbin/sshd-bootstrap /usr/sbin/sshd-bootstrap
-ADD etc/services-config/ssh/authorized_keys \
-	etc/services-config/ssh/sshd-bootstrap.conf \
-	etc/services-config/ssh/sshd-bootstrap.env \
-	/etc/services-config/ssh/
-ADD etc/services-config/supervisor/supervisord.conf /etc/services-config/supervisor/
-ADD etc/services-config/supervisor/supervisord.d/sshd.conf \
-	etc/services-config/supervisor/supervisord.d/sshd-bootstrap.conf \
-	/etc/services-config/supervisor/supervisord.d/
-
-RUN mkdir -p /etc/supervisord.d/ \
-	&& cp -pf /etc/ssh/sshd_config /etc/services-config/ssh/ \
-	&& ln -sf /etc/services-config/ssh/sshd_config /etc/ssh/sshd_config \
-	&& ln -sf /etc/services-config/ssh/sshd-bootstrap.conf /etc/sshd-bootstrap.conf \
-	&& ln -sf /etc/services-config/ssh/sshd-bootstrap.env /etc/sshd-bootstrap.env \
-	&& ln -sf /etc/services-config/supervisor/supervisord.conf /etc/supervisord.conf \
-	&& ln -sf /etc/services-config/supervisor/supervisord.d/sshd.conf /etc/supervisord.d/sshd.conf \
-	&& ln -sf /etc/services-config/supervisor/supervisord.d/sshd-bootstrap.conf /etc/supervisord.d/sshd-bootstrap.conf \
-	&& chmod +x /usr/sbin/sshd-bootstrap
-
+#ADD usr/sbin/sshd-bootstrap /usr/sbin/sshd-bootstrap
+#ADD etc/services-config/ssh/authorized_keys \
+#	etc/services-config/ssh/sshd-bootstrap.conf \
+#	etc/services-config/ssh/sshd-bootstrap.env \
+#	/etc/services-config/ssh/
+#ADD etc/services-config/supervisor/supervisord.conf /etc/services-config/supervisor/
+#ADD etc/services-config/supervisor/supervisord.d/sshd.conf \
+#	etc/services-config/supervisor/supervisord.d/sshd-bootstrap.conf \
+#	/etc/services-config/supervisor/supervisord.d/
+#
+#RUN mkdir -p /etc/supervisord.d/ \
+#	&& cp -pf /etc/ssh/sshd_config /etc/services-config/ssh/ \
+#	&& ln -sf /etc/services-config/ssh/sshd_config /etc/ssh/sshd_config \
+#	&& ln -sf /etc/services-config/ssh/sshd-bootstrap.conf /etc/sshd-bootstrap.conf \
+#	&& ln -sf /etc/services-config/ssh/sshd-bootstrap.env /etc/sshd-bootstrap.env \
+#	&& ln -sf /etc/services-config/supervisor/supervisord.conf /etc/supervisord.conf \
+#	&& ln -sf /etc/services-config/supervisor/supervisord.d/sshd.conf /etc/supervisord.d/sshd.conf \
+#	&& ln -sf /etc/services-config/supervisor/supervisord.d/sshd-bootstrap.conf /etc/supervisord.d/sshd-bootstrap.conf \
+#	&& chmod +x /usr/sbin/sshd-bootstrap
+#
 # -----------------------------------------------------------------------------
 # Purge
 # -----------------------------------------------------------------------------
@@ -110,18 +110,18 @@ EXPOSE 22
 # -----------------------------------------------------------------------------
 # Set default environment variables
 # -----------------------------------------------------------------------------
-ENV SSH_AUTHORIZED_KEYS="" \
-	SSH_AUTOSTART_SSHD=true \
-	SSH_AUTOSTART_SSHD_BOOTSTRAP=true \
-	SSH_CHROOT_DIRECTORY="%h" \
-	SSH_INHERIT_ENVIRONMENT=false \
-	SSH_SUDO="ALL=(ALL) ALL" \
-	SSH_USER="app-admin" \
-	SSH_USER_FORCE_SFTP=false \
-	SSH_USER_HOME="/home/%u" \
-	SSH_USER_PASSWORD="" \
-	SSH_USER_PASSWORD_HASHED=false \
-	SSH_USER_SHELL="/bin/bash" \
-	SSH_USER_ID="500:500"
-
-CMD ["/usr/bin/supervisord", "--configuration=/etc/supervisord.conf"]
+#ENV SSH_AUTHORIZED_KEYS="" \
+#	SSH_AUTOSTART_SSHD=true \
+#	SSH_AUTOSTART_SSHD_BOOTSTRAP=true \
+#	SSH_CHROOT_DIRECTORY="%h" \
+#	SSH_INHERIT_ENVIRONMENT=false \
+#	SSH_SUDO="ALL=(ALL) ALL" \
+#	SSH_USER="app-admin" \
+#	SSH_USER_FORCE_SFTP=false \
+#	SSH_USER_HOME="/home/%u" \
+#	SSH_USER_PASSWORD="" \
+#	SSH_USER_PASSWORD_HASHED=false \
+#	SSH_USER_SHELL="/bin/bash" \
+#	SSH_USER_ID="500:500"
+#
+#CMD ["/usr/bin/supervisord", "--configuration=/etc/supervisord.conf"]
