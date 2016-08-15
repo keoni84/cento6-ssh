@@ -28,19 +28,23 @@ RUN rpm --rebuilddb \
 	&& yum clean all
 
 # -----------------------------------------------------------------------------
-# Import epel Repository
+# Copy files into place
 # -----------------------------------------------------------------------------
-RUN wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-	&& rpm -ivh epel-release-6-8.noarch.rpm \
-	&& rm -rf epel-release-6-8.noarch.rpm
+ADD  epel-release-6-8.noarch.rpm /tmp/
 
 # -----------------------------------------------------------------------------
-# Base Install
+# Import epel Repository
+# -----------------------------------------------------------------------------
+RUN rpm -ivh /tmp/epel-release-6-8.noarch.rpm
+
+# -----------------------------------------------------------------------------
+# Install sshpass
 # -----------------------------------------------------------------------------
 RUN rpm --rebuilddb \
 	&& yum -y install sshpass \
 	&& yum -y erase epel-release-6-8 \
 	&& rm -rf /var/cache/yum/* \
+	&& rm -rf /tmp/epel-release-6-8.noarch.rpm \
 	&& rpm --rebuilddb \
 	&& yum clean all
 
