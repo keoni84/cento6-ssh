@@ -1,4 +1,1 @@
-# scuttlebutt
-# scuttlebutt
-# scuttlebutt
-# scuttlebutt
+# repository for docker centos6-ssh image
